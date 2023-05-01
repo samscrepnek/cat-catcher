@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous" defer></script>
+    <script src="./scripts/scripts.js" defer></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous" />
+    <link rel="stylesheet" href="./styles/style.css" />
+    <title>Cat Catcher</title>
+  </head>
+  <body>
+    <div id="container">
+      <!-- Splash Screen -->
+
+      <div id="splash" class="screen">
+        <h1>Cat Catcher</h1>
+        <img src="images/cat-guy.svg" alt="logo" id="logo-main" />
+        <div id="username-display"></div>
+        <div class="input-group mb-3" id="player-name-div">
+          <input type="text" class="form-control" id="player-name-input" placeholder="Player Name" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" />
+          <button type="button" class="btn btn-secondary" id="submit-btn">Submit</button>
+        </div>
+        <h3>Grid Size</h3>
+        <div class="grid-btns btn-group" role="group" id="grid-btns" aria-label="Basic radio toggle button group">
+          <input type="radio" class="btn-check" name="grid-radio" id="btn-grid0" autocomplete="off" checked />
+          <label class="btn btn-outline-primary" for="btn-grid0">2 x 2</label>
+
+          <input type="radio" class="btn-check" name="grid-radio" id="btn-grid1" autocomplete="off" />
+          <label class="btn btn-outline-primary" for="btn-grid1">4 x 2</label>
+
+          <input type="radio" class="btn-check" name="grid-radio" id="btn-grid2" autocomplete="off" />
+          <label class="btn btn-outline-primary" for="btn-grid2">4 x 3</label>
+
+          <input type="radio" class="btn-check" name="grid-radio" id="btn-grid3" autocomplete="off" />
+          <label class="btn btn-outline-primary" for="btn-grid3">4 x 4</label>
+
+          <input type="radio" class="btn-check" name="grid-radio" id="btn-grid4" autocomplete="off" />
+          <label class="btn btn-outline-primary" for="btn-grid4">5 x 4</label>
+
+          <input type="radio" class="btn-check" name="grid-radio" id="btn-grid5" autocomplete="off" />
+          <label class="btn btn-outline-primary" for="btn-grid5">6 x 4</label>
+        </div>
+        <h3>Guess Timer</h3>
+        <div id="timer-controls">
+          <div class="form-check form-switch">
+            <input class="form-check-input" type="checkbox" role="switch" id="timer-switch" />
+            <label class="form-check-label" for="flexSwitchCheckDefault"></label>
+          </div>
+          <div class="btn-group" role="group" id="timer-btns" aria-label="Basic radio toggle button group">
+            <input type="radio" class="btn-check" name="timer-radio" id="btn-timer1" autocomplete="off" checked />
+            <label class="btn btn-outline-primary" for="btn-timer1">5 Seconds</label>
+
+            <input type="radio" class="btn-check" name="timer-radio" id="btn-timer2" autocomplete="off" />
+            <label class="btn btn-outline-primary" for="btn-timer2">10 Seconds</label>
+
+            <input type="radio" class="btn-check" name="timer-radio" id="btn-timer3" autocomplete="off" />
+            <label class="btn btn-outline-primary" for="btn-timer3">15 Seconds</label>
+          </div>
+        </div>
+        <div id="game-btns">
+          <button type="button" class="btn btn-success btn-lg" id="start-btn">start game</button>
+          <button type="button" class="btn btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#help">help</button>
+        </div>
+      </div>
+
+      <!-- Modal -->
+
+      <div class="modal fade" id="help" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="exampleModalLabel">Help</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <p>In Cat Catcher, your goal is to match the pictures of cats hidden under the tiles. Clicking a tile will reveal the cat underneath, then click another tile and see if it's a match. If it is a match you will get a point and the cats will remain revealed, if not, the cats will be re hidden and you can guess again. You can select how big the grid will be, and if you're looking for more of a challenge, you can turn on the guess timer.</p>
+              <p>The guess timer will add a countdown to your guess, limiting your time to think. If you don't make a guess before the timer runs out, the game will be over. Good luck!</p>
+              <p>Cat Catcher is a JavaScript game made by Sam Screpnek.</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Game Screen -->
+
+      <div id="game" class="screen">
+        <div id="displays">
+          <div id="guess-counter">Guesses: <span id="guesses">0</span></div>
+          <h2 id="username"></h2>
+          <div id="match-counter">Matches: <span id="matches">0</span></div>
+          <div class="numeric-display">
+            <div id="secs-background"><span id="secs"></span></div>
+          </div>
+        </div>
+
+        <div id="gameboard"></div>
+        <div id="buttons">
+          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#help">help</button>
+          <button type="button" class="quit-btn btn btn-danger">quit</button>
+          <button type="button" class="btn btn-warning" id="end-btn">end game</button>
+        </div>
+      </div>
+
+      <!-- Game Over Screen -->
+
+      <div id="game-over" class="screen">
+        <h2>Game Over</h2>
+        <div id="cat-image"></div>
+        <div class="game-over-html"><span id="game-over-username"></span></div>
+        <div class="game-over-html"><span id="game-over-message"></span></div>
+        <div id="game-over-btns">
+          <button type="button" class="btn btn-success btn-lg" id="play-again-btn">play again</button>
+          <button type="button" class="quit-btn btn btn-danger btn-lg">quit</button>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
